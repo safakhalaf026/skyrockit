@@ -20,6 +20,7 @@ const isSignedIn = require('./middleware/isSignedIn');
 
 // Controllers
 const authCtrl = require('./controllers/auth');
+const applicationsController = require('./controllers/applications')
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT ? process.env.PORT : '3000';
@@ -50,17 +51,18 @@ app.use(passUserToView);
 
 // Public
 app.get('/', async (req, res) => {
-  res.render('index.ejs');
+  if (req.session.user){
+    res.redirect(`/users/${req.session.user._id}/applications`) // if no else, then write return keyword
+  }else{
+    res.render('index.ejs')
+  }
 });
 
 app.use('/auth', authCtrl);
 
-// Protected Routes
+// Protected Routes, middleware used placement is important here, becuase users must be signed in before accessing anything in the applications controller
 app.use(isSignedIn);
-
-app.get('/vip-lounge', async (req, res) => {
-  res.send('VIP PAGE');
-});
+app.use('/users/:userId/applications', applicationsController)
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
