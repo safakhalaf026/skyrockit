@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EDIT a <%= application.title %></title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+    <h1>EDIT a <%= application.title %></h1>
+<br>
+    <form action="/users/<%= user._id %>/applications" method="post">
+        <label for="company">company</label>
+        <input id="company" type="text" name="company" required value="<%= application.company %>">
+<br>
+<br>
+        <label for="title">title</label>
+        <input id="title" type="text" name="title" required>
+<br>
+<br>
+        <label for="notes">notes</label>
+        <textarea id="notes" name="notes" required></textarea>
+<br>
+<br>
+        <label for="postingLink">postingLink</label>
+        <input id="postingLink" type="text" name="postingLink" required>
+<br>
+<br>
+        <label for="status">postingLink</label>
+        <select id="status" name="status" required>
+            <option value="interested">Interested</option>
+            <option value="applied">Applied</option>
+            <option value="interviewing">Interviewing</option>
+            <option value="rejected">Rejected</option>
+            <option value="accepted">Accepted</option>
+        </select>
+<br>
+<br>
+        <button type="submit" >Submit Application</button>
+    </form>
+  </body>
+</html>
